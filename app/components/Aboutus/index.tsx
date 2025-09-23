@@ -77,7 +77,8 @@ const Aboutus = () => {
                                 About Us
                             </h2>
                             <p className="font-medium text-lightblack text-2xl mt-10 text-center lg:text-start">
-                                Global Talent Sphere is an AI - generation high tech consulting and services company dedicated to empowering enterprises and industries with cutting-edge Digital Engineering and Solution Delivery capabilities. With a global talent network spanning 30+ countries across the US, EU, Australia, and India, we blend local market insight with world-class expertise to accelerate innovation and deliver measurable business outcomes.
+                                {/* Global Talent Sphere is an AI - generation high tech consulting and services company dedicated to empowering enterprises and industries with cutting-edge Digital Engineering and Solution Delivery capabilities. With a global talent network spanning 30+ countries across the US, EU, Australia, and India, we blend local market insight with world-class expertise to accelerate innovation and deliver measurable business outcomes. */}
+                                Posspole Talent concentrate on three core domains essential to digitizing fundamental business operations: Customer Experience, Intelligent Industry, and Enterprise Management. This work is supported by the twin technological foundations of any successful digital transformation—data and cloud—all while rigorously upholding the principles of cybersecurity and sustainable development.
                             </p>
                         </div>
 
