@@ -54,7 +54,7 @@ const Aboutus = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 my-16">
 
                         {/* COLUMN-1 */}
-                        <div className="relative w-[450px] h-[400px] mx-auto md:mx-0 rounded-[24px] shadow-2xl overflow-hidden mt-14">
+                        <div className="relative w-[450px] h-[400px] mx-auto md:mx-0 rounded-[24px] shadow-[0_15px_40px_rgba(0,0,0,0.5)] overflow-hidden mt-14">
                             <img
                                 src="/images/aboutus/aboutus.jpg"
                                 alt="image"
