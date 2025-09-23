@@ -119,7 +119,7 @@ const Banner = () => {
       ></div>
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+      {/* <div className="absolute inset-0 bg-black bg-opacity-50"></div> */}
 
       {/* Animated Text */}
       <div className="relative z-20 max-w-3xl px-6 mt-40 text-white">

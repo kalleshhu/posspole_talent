@@ -54,14 +54,14 @@ const Aboutus = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 my-16">
 
                         {/* COLUMN-1 */}
-                        <div className="relative w-[530px] h-[400px] mx-auto md:mx-0 rounded-[24px] shadow-xl overflow-hidden mt-10">
+                        <div className="relative w-[450px] h-[400px] mx-auto md:mx-0 rounded-[24px] shadow-2xl overflow-hidden mt-14">
                             <img
-                                src="/images/aboutus/about3.jpg"
+                                src="/images/aboutus/aboutus.jpg"
                                 alt="image"
                                 className="w-full h-full object-cover"
                             />
                             {/* Black overlay */}
-                            <div className="absolute inset-0 bg-black/10"></div>
+                            {/* <div className="absolute inset-0 bg-black/10"></div> */}
                         </div>
 
                         {/* COLUMN-2 */}
