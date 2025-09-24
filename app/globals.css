@@ -438,7 +438,7 @@ html {
 }
 
 .animate-fadeInUp {
-  animation: fadeInUp 1s ease forwards;
+  animation: fadeInUp 4s ease forwards;
 }
 
 .animate-bgZoom {
