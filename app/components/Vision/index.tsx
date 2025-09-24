@@ -25,8 +25,8 @@ const Vision: React.FC = () => {
         {data.map((item, index) => (
           <div
             key={index}
-            className="bg-gradient-to-b from-white to-gray-50 rounded-2xl p-10 text-center border border-gray-200
-                       shadow-lg transform transition-all duration-500 group
+            className="bg-gradient-to-b from-white to-gray-50 rounded-2xl p-10 text-center
+                       shadow-xl transform transition-all duration-500 group bg-[#eff2f4]
                        hover:-translate-y-5 hover:scale-105 
                        hover:shadow-[0_10px_30px_rgba(68,141,198,0.4)] hover:bg-[#d0f1fc]"
           >
