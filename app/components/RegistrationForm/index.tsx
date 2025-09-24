@@ -171,18 +171,19 @@ const RegistrationForm = () => {
 
                 {/* SUBMIT */}
                 <div className="text-center">
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="w-full text-white p-3 rounded-lg transition"
-                        style={{
-                            backgroundColor: loading ? "gray" : "blueviolet",
-                            cursor: loading ? "not-allowed" : "pointer",
-                        }}
-                    >
-                        {loading ? "Submitting..." : "Submit"}
-                    </button>
-                </div>
+  <button
+    type="submit"
+    disabled={loading}
+    className="text-white p-3 rounded-lg transition w-60 mt-10"
+    style={{
+      backgroundColor: loading ? "gray" : "blueviolet",
+      cursor: loading ? "not-allowed" : "pointer",
+    }}
+  >
+    {loading ? "Submitting..." : "Submit"}
+  </button>
+</div>
+
             </form>
 
             {/* SUCCESS MODAL */}
