@@ -53,7 +53,7 @@ const Navbar = () => {
                             {/* LOGO */}
                             <div className="flex flex-shrink-0 items-center border-right">
                                 <Link href="/" className='text-2xl sm:text-4xl font-semibold text-black'>
-                                    <img src="/images/navbar/logo2.jpg" alt='Posspole logo' style={{ width: "250px", height: "70px", marginTop:"2%"}} />
+                                    <img src="/images/navbar/logo2.jpg" alt='Posspole logo' style={{ width: "220px", height: "60px", marginTop:"2%"}} />
                                 </Link>
                             </div>
 
