@@ -1,5 +1,3 @@
-
-
 "use client";
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
@@ -13,11 +11,11 @@ interface ContactusformProps {
 const Contactusform = ({ showAlways = false }: ContactusformProps) => {
   let [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const closeModal = () => setIsOpen(false);
   const openModal = () => setIsOpen(true);
 
-  // ✅ Handle Form Submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -26,16 +24,15 @@ const Contactusform = ({ showAlways = false }: ContactusformProps) => {
     const formData = new FormData(form);
 
     try {
-      const response = await fetch("https://formspree.io/f/xnnbwqjl", {
+      const response = await fetch("https://formsubmit.co/ajax/letmein@posspole.com", {
         method: "POST",
         body: formData,
         headers: { Accept: "application/json" },
       });
 
       if (response.ok) {
-        alert("✅ Message sent successfully!");
+        setSuccess(true); // show success modal
         form.reset();
-        closeModal();
       } else {
         alert("❌ Failed to send message, try again.");
       }
@@ -54,11 +51,11 @@ const Contactusform = ({ showAlways = false }: ContactusformProps) => {
           <button
             type="button"
             className="
-    contact-gradient-btn
-    justify-end text-xl font-semibold text-white 
-    py-4 px-6 lg:px-12 rounded-full
-    w-full hover:scale-105 transition-transform duration-300
-  "
+              contact-gradient-btn
+              justify-end text-xl font-semibold text-white 
+              py-4 px-6 lg:px-12 rounded-full
+              w-full hover:scale-105 transition-transform duration-300
+            "
             onClick={openModal}
           >
             Contact Us
@@ -117,13 +114,10 @@ const Contactusform = ({ showAlways = false }: ContactusformProps) => {
                       Send us a message and we will respond as soon as possible.
                     </p>
 
-                    {/* ✅ Form with handler */}
+                    {/* Form */}
                     <form onSubmit={handleSubmit} className="space-y-8">
                       <div>
-                        <label
-                          htmlFor="name"
-                          className="block mb-2 text-sm font-medium text-gray-900"
-                        >
+                        <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">
                           Your Name
                         </label>
                         <input
@@ -136,10 +130,7 @@ const Contactusform = ({ showAlways = false }: ContactusformProps) => {
                         />
                       </div>
                       <div>
-                        <label
-                          htmlFor="email"
-                          className="block mb-2 text-sm font-medium text-gray-900"
-                        >
+                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
                           Your email
                         </label>
                         <input
@@ -152,10 +143,7 @@ const Contactusform = ({ showAlways = false }: ContactusformProps) => {
                         />
                       </div>
                       <div className="sm:col-span-2">
-                        <label
-                          htmlFor="message"
-                          className="block mb-2 text-sm font-medium text-gray-900"
-                        >
+                        <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900">
                           Your message
                         </label>
                         <textarea
@@ -170,29 +158,35 @@ const Contactusform = ({ showAlways = false }: ContactusformProps) => {
                         type="submit"
                         disabled={loading}
                         className="
-    contact-gradient-btn
-    justify-end text-xl font-semibold text-white 
-    py-4 px-6 lg:px-12 rounded-full
-    w-full hover:scale-105 transition-transform duration-300
-  "
+                          contact-gradient-btn
+                          justify-end text-xl font-semibold text-white 
+                          py-4 px-6 lg:px-12 rounded-full
+                          w-full hover:scale-105 transition-transform duration-300
+                        "
                       >
                         {loading ? "Sending..." : "Send message"}
                       </button>
-{/* 
-                      <button
-  type="button"
-  onClick={openModal}
-  className="
-    contact-gradient-btn
-    justify-end text-xl font-semibold text-white 
-    py-4 px-6 lg:px-12 rounded-full
-    w-full hover:scale-105 transition-transform duration-300
-  "
->
-  Contact Us
-</button> */}
-
                     </form>
+
+                    {/* Success Popup */}
+                    {success && (
+                      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                        <div className="bg-white rounded-2xl shadow-2xl p-8 text-center max-w-sm">
+                          <h2 className="text-2xl font-bold text-green-600 mb-4">
+                            🎉 Message sent successfully!
+                          </h2>
+                          <p className="text-gray-600 mb-6">
+                            Thank you for reaching out. We’ll get back to you soon.
+                          </p>
+                          <button
+                            onClick={() => setSuccess(false)}
+                            className="bg-indigo-600 text-black px-6 py-2 rounded-lg shadow hover:bg-indigo-700 transition"
+                          >
+                            Close
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

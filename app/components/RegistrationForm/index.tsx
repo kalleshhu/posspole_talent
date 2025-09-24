@@ -4,31 +4,30 @@ import { useState } from "react";
 
 const RegistrationForm = () => {
     const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
 
-        const form = e.currentTarget;
-        const formData = new FormData(form);
-
         try {
-            const response = await fetch("https://getform.io/f/anlnkjna", {
+            const formData = new FormData(e.target);
+            const response = await fetch("https://formsubmit.co/ajax/letmein@posspole.com", {
                 method: "POST",
                 body: formData,
             });
 
             if (response.ok) {
-                alert("✅ Registered Successfully!");
-                form.reset();
+                setSuccess(true);
+                e.target.reset(); // clear form
             } else {
-                alert("❌ Failed to Register, Please try again");
+                alert("❌ Something went wrong. Try again.");
             }
-        } catch (err) {
-            alert("❌ Something went wrong. Please try again.");
-        } finally {
-            setLoading(false);
+        } catch (error) {
+            alert("⚠️ Error submitting form.");
         }
+
+        setLoading(false);
     };
 
     return (
@@ -44,7 +43,6 @@ const RegistrationForm = () => {
             <form
                 onSubmit={handleSubmit}
                 className="max-w-3xl mx-auto bg-white shadow-2xl rounded-3xl p-10 space-y-8"
-                encType="multipart/form-data"
             >
                 <h3 className="text-4xl font-bold text-indigo-600 text-center">
                     Register
@@ -61,8 +59,8 @@ const RegistrationForm = () => {
                     <input
                         type="text"
                         name="name"
-                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition"
                         required
+                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition"
                         placeholder="Enter your full name..."
                     />
                 </div>
@@ -75,8 +73,8 @@ const RegistrationForm = () => {
                     <input
                         type="email"
                         name="email"
-                        className="w-full p-4 rounded-xl shadow-md  bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition"
                         required
+                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition"
                         placeholder="eg: abcd@example.com"
                     />
                 </div>
@@ -89,8 +87,8 @@ const RegistrationForm = () => {
                     <input
                         type="tel"
                         name="phone"
-                        className="w-full p-4 rounded-xl shadow-md  bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition"
                         required
+                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition"
                         placeholder="your phone number..."
                     />
                 </div>
@@ -102,8 +100,8 @@ const RegistrationForm = () => {
                     </label>
                     <select
                         name="areaOfWork"
-                        className="w-full p-4 rounded-xl shadow-md  bg-[#f4f3f3] focus:bg-white cursor-pointer focus:ring-2 focus:ring-indigo-500 transition"
                         required
+                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white cursor-pointer focus:ring-2 focus:ring-indigo-500 transition"
                     >
                         <option value="">Select an option</option>
                         <option>Web Development (Frontend, Backend, Full-stack)</option>
@@ -128,8 +126,8 @@ const RegistrationForm = () => {
                     </label>
                     <select
                         name="experience"
-                        className="w-full p-4 rounded-xl shadow-md  bg-[#f4f3f3] focus:bg-white cursor-pointer focus:ring-2 focus:ring-indigo-500 transition"
                         required
+                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white cursor-pointer focus:ring-2 focus:ring-indigo-500 transition"
                     >
                         <option value="">Select experience</option>
                         <option>Fresher</option>
@@ -148,27 +146,30 @@ const RegistrationForm = () => {
                     <textarea
                         name="description"
                         rows={4}
-                        className="w-full p-4 rounded-xl shadow-md  bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition"
+                        required
+                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition"
                         placeholder="Tell us a bit about yourself"
-                        required
                     />
                 </div>
 
-                {/* PROFILE UPLOAD */}
-                <div>
-                    <label className="block text-m font-medium text-gray-700 mb-2">
-                        Upload Profile (PDF, DOC) <span className="text-sm text-grey ml-5">(Max 5MB)</span>
-                    </label>
-                    <input
-                        type="file"
-                        name="file"
-                        accept=".pdf,.doc,.docx"
-                        className="w-full p-4 rounded-xl shadow-md  bg-[#f4f3f3] hover:bg-gray-100 cursor-pointer focus:bg-white transition"
-                        required
-                    />
-                </div>
+               {/* RESUME LINK */}
+<div>
+    <label className="block text-m font-medium text-gray-700 mb-2">
+        Profile Link (Google Drive, OneDrive, etc.)
+    </label>
+    <input
+        type="url"
+        name="resumeLink"
+        required
+        placeholder="Paste your resume link here..."
+        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition"
+    />
+</div>
 
-                {/* SUBMIT BUTTON */}
+                {/* Hidden fields */}
+                <input type="hidden" name="_captcha" value="false" />
+
+                {/* SUBMIT */}
                 <div className="text-center">
                     <button
                         type="submit"
@@ -183,6 +184,26 @@ const RegistrationForm = () => {
                     </button>
                 </div>
             </form>
+
+            {/* SUCCESS MODAL */}
+            {success && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-white rounded-2xl shadow-2xl p-8 text-center max-w-sm">
+                        <h2 className="text-2xl font-bold text-green-600 mb-4">
+                            🎉 Registered Successfully!
+                        </h2>
+                        <p className="text-gray-600 mb-6">
+                            Thank you for joining our network. We’ll get in touch soon!
+                        </p>
+                        <button
+                            onClick={() => setSuccess(false)}
+                            className="bg-indigo-600 text-black px-6 py-2 rounded-lg shadow hover:bg-indigo-700 transition"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
