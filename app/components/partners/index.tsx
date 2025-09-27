@@ -1,4 +1,6 @@
+"use client";
 import { FaCogs, FaUsers, FaPuzzlePiece } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const Partners = () => {
   const partners = [
@@ -27,23 +29,22 @@ const Partners = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-20 mt-20">
           {partners.map((item, idx) => (
-            <div
+            <motion.div
               key={idx}
-              className="p-8 rounded-[24px] shadow-lg hover:shadow-2xl transition bg-white hover:bg-gradient-to-r hover:from-[#cbd9e5] hover:to-[#70a3ca] hover:text-white"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="p-8 rounded-[24px] shadow-lg bg-white"
             >
-              <div className="flex items-center justify-center w-14 h-14 text-[#6ba4cf] rounded-full mb-6 transition-colors duration-300">
+              <div className="flex items-center justify-center w-14 h-14 text-[#6ba4cf] rounded-full mb-6">
                 {item.icon}
               </div>
-              <h3
-                className="font-bold mb-6 transition-colors duration-300"
-                style={{ fontSize: "20px" }}
-              >
+              <h3 className="font-bold mb-6" style={{ fontSize: "20px" }}>
                 {item.title}
               </h3>
-              <p className="text-gray-600 hover:text-white transition-colors duration-300 mb-5">
+              <p className="text-gray-600 mb-5">
                 {item.desc}
               </p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

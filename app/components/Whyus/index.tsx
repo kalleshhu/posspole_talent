@@ -48,7 +48,7 @@ const WhyUsCard = ({ item, index }) => {
         ease: "easeIn",                    // smooth slide-up easing
         delay: index * 0.2,                // optional stagger
       }}
-      className="flex items-start gap-5 relative group transition-all duration-500  hover:bg-[#e0f8ff] p-4 rounded-xl"
+      className="flex items-start gap-5 relative group transition-all duration-500 p-4 rounded-xl"
     >
       <div className="flex-shrink-0 p-6">
         <div className="w-14 h-14 flex items-center justify-center rounded-full bg-[#eff2f4] text-[#6ba4cf] group-hover:bg-[#448dc6] group-hover:text-white transition-all duration-300">
