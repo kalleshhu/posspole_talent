@@ -33,7 +33,7 @@ const Partners = () => {
               key={idx}
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="p-8 rounded-[24px] shadow-lg bg-white"
+              className="p-8 rounded-[24px] shadow-xl bg-white"
             >
               <div className="flex items-center justify-center w-14 h-14 text-[#6ba4cf] rounded-full mb-6">
                 {item.icon}
