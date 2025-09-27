@@ -11,6 +11,7 @@
 body {
   margin: 0;
   font-family: 'Urbanist', sans-serif;
+  overflow-x: hidden;
 }
 
 html:not([data-scroll="0"]) .navbar {

@@ -174,7 +174,7 @@ const RegistrationForm = () => {
   <button
     type="submit"
     disabled={loading}
-    className="text-white p-3 rounded-lg transition w-60 mt-10"
+    className="contact-gradient-btn text-white p-3 rounded-lg transition w-60 mt-10"
     style={{
       backgroundColor: loading ? "gray" : "blueviolet",
       cursor: loading ? "not-allowed" : "pointer",

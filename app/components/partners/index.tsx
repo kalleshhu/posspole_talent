@@ -38,7 +38,7 @@ const Partners = () => {
               <div className="flex items-center justify-center w-14 h-14 text-[#6ba4cf] rounded-full mb-6">
                 {item.icon}
               </div>
-              <h3 className="font-bold mb-6" style={{ fontSize: "20px" }}>
+              <h3 className="font-bold mb-6 text-[#387289] " style={{ fontSize: "20px" }}>
                 {item.title}
               </h3>
               <p className="text-gray-600 mb-5">
