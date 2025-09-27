@@ -5,9 +5,11 @@ import WhatWeOffer from './components/WhatWeOffer/index';
 import Vision from './components/Vision';
 import Dedicated from './components/Dedicated/index';
 import RegistrationForm from './components/RegistrationForm';
+import Partners from './components/partners';
 // import Digital from './components/Digital/index';
 // import Beliefs from './components/Beliefs/index';
-// import Wework from './components/Wework/index';
+import Wework from './components/Wework/index';
+import WhyPartner from './components/WhyPartner/index';
 // import Ourteam from './components/Ourteam/index';
 // import Featured from './components/Featured/index';
 // import Manage from './components/Manage/index';
@@ -28,11 +30,13 @@ export default function Home() {
       <Whyus />
       <Vision />
       <WhatWeOffer />
+      <Partners />
+      <Wework />
+      <WhyPartner />
       <Dedicated />
       <RegistrationForm />
       {/* <Digital />
       <Beliefs />
-      <Wework />
       <Ourteam />
       <Featured />
       <Manage />
