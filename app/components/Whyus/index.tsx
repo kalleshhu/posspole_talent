@@ -5,6 +5,7 @@ import { FaBolt, FaBrain, FaGlobe, FaHandshake } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
+// data array
 const data = [
   {
     title: "Accelerated Solution Delivery",
@@ -32,6 +33,18 @@ const data = [
   },
 ];
 
+// ✅ props type
+interface WhyUsCardProps {
+  item: {
+    title: string;
+    desc: string;
+    icon: React.ReactNode;
+    headingColor: string;
+  };
+  index: number;
+}
+
+// card component
 const WhyUsCard: React.FC<WhyUsCardProps> = ({ item, index }) => {
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -57,7 +70,10 @@ const WhyUsCard: React.FC<WhyUsCardProps> = ({ item, index }) => {
       </div>
 
       <div className="pt-6 pr-4">
-        <h3 className="text-2xl font-bold mb-4" style={{ color: item.headingColor }}>
+        <h3
+          className="text-2xl font-bold mb-4"
+          style={{ color: item.headingColor }}
+        >
           {item.title}
         </h3>
         <p className="text-gray-600 text-lg">{item.desc}</p>
@@ -67,8 +83,7 @@ const WhyUsCard: React.FC<WhyUsCardProps> = ({ item, index }) => {
   );
 };
 
-
-
+// main component
 const Whyus = () => {
   return (
     <>
