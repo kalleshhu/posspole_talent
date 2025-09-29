@@ -213,15 +213,26 @@
 
 
 
+
 "use client";
 
 import { useState } from "react";
 
+// This component provides a form for users to register for a talent network,
+// using formsubmit.co for backend submission and custom modals for feedback.
 const RegistrationForm = () => {
+    // State to manage the loading status during form submission
     const [loading, setLoading] = useState(false);
+    // State to manage the visibility of the success modal
     const [success, setSuccess] = useState(false);
-    const [error, setError] = useState(null); // New state for error messages
+    // State to manage and display error messages (null if no error)
+    const [error, setError] = useState(null); 
 
+    /**
+     * Handles the form submission asynchronously.
+     * Prevents default form action, sets loading state, sends data to formsubmit.co,
+     * and displays a success or error modal based on the response.
+     */
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -229,6 +240,7 @@ const RegistrationForm = () => {
 
         try {
             const formData = new FormData(e.target);
+            // The API endpoint for form submission (using formsubmit.co AJAX endpoint)
             const response = await fetch("https://formsubmit.co/ajax/letmein@posspole.com", {
                 method: "POST",
                 body: formData,
@@ -236,19 +248,23 @@ const RegistrationForm = () => {
 
             if (response.ok) {
                 setSuccess(true);
-                e.target.reset(); // clear form
+                e.target.reset(); // Clear form on successful submission
             } else {
-                // Replaced alert() with state update
-                setError("❌ Something went wrong. Try again.");
+                // Handle non-200 responses without using alert()
+                setError("❌ Something went wrong. The server returned an error.");
             }
         } catch (submitError) {
-            // Replaced alert() with state update
-            setError("⚠️ Error submitting form. Check your network connection.");
+            // Handle network errors without using alert()
+            console.error("Submission Error:", submitError);
+            setError("⚠️ Network Error. Check your connection and try again.");
         }
 
         setLoading(false);
     };
 
+    /**
+     * Closes the currently displayed success or error modal.
+     */
     const closeModal = () => {
         setSuccess(false);
         setError(null);
@@ -257,76 +273,81 @@ const RegistrationForm = () => {
     return (
         <div
             id="registration-section"
-            className="bg-gray-100 py-16 px-4 -mt-40"
+            // Layout adjusted with -mt-40 (typical Tailwind hero offset) and responsive padding
+            className="bg-gray-100 py-16 px-4 md:px-8 -mt-40"
             style={{ marginBottom: "20%" }}
         >
-            <h2 className="text-5xl font-extrabold text-center text-gray-900 mb-12">
+            <h2 className="text-4xl sm:text-5xl font-extrabold text-center text-gray-900 mb-12">
                 Join Our Talent Network
             </h2>
 
             <form
                 onSubmit={handleSubmit}
-                className="max-w-3xl mx-auto bg-white shadow-2xl rounded-3xl p-10 space-y-8"
+                className="max-w-3xl mx-auto bg-white shadow-2xl rounded-3xl p-6 sm:p-10 space-y-6 sm:space-y-8"
             >
-                <h3 className="text-4xl font-bold text-indigo-600 text-center">
+                <h3 className="text-3xl sm:text-4xl font-bold text-indigo-600 text-center">
                     Register
                 </h3>
-                <p className="text-center text-gray-600 text-lg mb-3">
-                    {/* FIXED: Unescaped apostrophe in "We'll" and "there's" */}
+                <p className="text-center text-gray-600 text-base sm:text-lg mb-3">
+                    {/* JSX escaping for apostrophes */}
                     Fill in your details below and showcase your skills. We&apos;ll get in touch if there&apos;s a fit!
                 </p>
 
-                {/* NAME */}
+                {/* NAME FIELD */}
                 <div>
-                    <label className="block text-m font-medium text-gray-700 mb-2">
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                         Full Name
                     </label>
                     <input
+                        id="name"
                         type="text"
                         name="name"
                         required
-                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition"
+                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition border border-transparent focus:border-indigo-500"
                         placeholder="Enter your full name..."
                     />
                 </div>
 
-                {/* EMAIL */}
+                {/* EMAIL FIELD */}
                 <div>
-                    <label className="block text-m font-medium text-gray-700 mb-2">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                         Email Address
                     </label>
                     <input
+                        id="email"
                         type="email"
                         name="email"
                         required
-                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition"
+                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition border border-transparent focus:border-indigo-500"
                         placeholder="eg: abcd@example.com"
                     />
                 </div>
 
-                {/* PHONE */}
+                {/* PHONE FIELD */}
                 <div>
-                    <label className="block text-m font-medium text-gray-700 mb-2">
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
                         Phone Number
                     </label>
                     <input
+                        id="phone"
                         type="tel"
                         name="phone"
                         required
-                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition"
+                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition border border-transparent focus:border-indigo-500"
                         placeholder="your phone number..."
                     />
                 </div>
 
-                {/* AREA OF WORK */}
+                {/* AREA OF WORK DROPDOWN */}
                 <div>
-                    <label className="block text-m font-medium text-gray-700 mb-2">
+                    <label htmlFor="areaOfWork" className="block text-sm font-medium text-gray-700 mb-2">
                         Area of Work
                     </label>
                     <select
+                        id="areaOfWork"
                         name="areaOfWork"
                         required
-                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white cursor-pointer focus:ring-2 focus:ring-indigo-500 transition"
+                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white cursor-pointer focus:ring-2 focus:ring-indigo-500 transition border border-transparent focus:border-indigo-500"
                     >
                         <option value="">Select an option</option>
                         <option>Web Development (Frontend, Backend, Full-stack)</option>
@@ -344,15 +365,16 @@ const RegistrationForm = () => {
                     </select>
                 </div>
 
-                {/* EXPERIENCE */}
+                {/* EXPERIENCE DROPDOWN */}
                 <div>
-                    <label className="block text-m font-medium text-gray-700 mb-2">
+                    <label htmlFor="experience" className="block text-sm font-medium text-gray-700 mb-2">
                         Experience
                     </label>
                     <select
+                        id="experience"
                         name="experience"
                         required
-                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white cursor-pointer focus:ring-2 focus:ring-indigo-500 transition"
+                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white cursor-pointer focus:ring-2 focus:ring-indigo-500 transition border border-transparent focus:border-indigo-500"
                     >
                         <option value="">Select experience</option>
                         <option>Fresher</option>
@@ -363,45 +385,48 @@ const RegistrationForm = () => {
                     </select>
                 </div>
 
-                {/* DESCRIPTION */}
+                {/* DESCRIPTION TEXTAREA */}
                 <div>
-                    <label className="block text-m font-medium text-gray-700 mb-2">
+                    <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
                         Brief Description
                     </label>
                     <textarea
+                        id="description"
                         name="description"
                         rows={4}
                         required
-                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition"
-                        placeholder="Tell us a bit about yourself"
+                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition border border-transparent focus:border-indigo-500"
+                        placeholder="Tell us a bit about yourself and your career goals."
                     />
                 </div>
 
-                {/* RESUME LINK */}
+                {/* RESUME LINK FIELD */}
                 <div>
-                    <label className="block text-m font-medium text-gray-700 mb-2">
-                        Profile Link (Google Drive, OneDrive, etc.)
+                    <label htmlFor="resumeLink" className="block text-sm font-medium text-gray-700 mb-2">
+                        Profile Link (Google Drive, OneDrive, Portfolio, etc.)
                     </label>
                     <input
+                        id="resumeLink"
                         type="url"
                         name="resumeLink"
                         required
                         placeholder="Paste your resume link here..."
-                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition"
+                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition border border-transparent focus:border-indigo-500"
                     />
                 </div>
 
-                {/* Hidden fields */}
+                {/* Hidden field to disable formsubmit.co captcha */}
                 <input type="hidden" name="_captcha" value="false" />
 
-                {/* SUBMIT */}
+                {/* SUBMIT BUTTON */}
                 <div className="text-center">
                     <button
                         type="submit"
                         disabled={loading}
-                        className="contact-gradient-btn text-white p-3 rounded-lg transition w-60 mt-10"
+                        className="text-white p-3 rounded-xl shadow-lg transition duration-200 transform hover:scale-[1.02] active:scale-[0.98] w-full sm:w-60 mt-4 sm:mt-10"
                         style={{
-                            backgroundColor: loading ? "gray" : "blueviolet",
+                            // Custom style to apply a gradient effect or fallback color
+                            background: loading ? "gray" : "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)", // Indigo to Violet gradient
                             cursor: loading ? "not-allowed" : "pointer",
                         }}
                     >
@@ -410,22 +435,25 @@ const RegistrationForm = () => {
                 </div>
             </form>
 
-            {/* ERROR NOTIFICATION MODAL (New Component) */}
+            {/* --- CUSTOM ERROR MODAL --- */}
             {error && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" onClick={closeModal}>
+                <div 
+                    className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4 transition-opacity duration-300" 
+                    onClick={closeModal} // Close on backdrop click
+                >
                     <div 
-                        className="bg-white rounded-2xl shadow-2xl p-8 text-center max-w-sm transform transition-all duration-300 scale-100"
+                        className="bg-white rounded-3xl shadow-2xl p-8 text-center max-w-xs sm:max-w-sm w-full transform transition-transform duration-300 scale-100"
                         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
                     >
-                        <h2 className="text-2xl font-bold text-red-600 mb-4">
+                        <h2 className="text-2xl font-extrabold text-red-600 mb-4">
                             🚫 Submission Failed
                         </h2>
-                        <p className="text-gray-600 mb-6">
+                        <p className="text-gray-700 mb-6">
                             {error}
                         </p>
                         <button
                             onClick={closeModal}
-                            className="bg-red-600 text-white px-6 py-2 rounded-lg shadow hover:bg-red-700 transition"
+                            className="bg-red-600 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:bg-red-700 transition duration-150 transform hover:shadow-xl w-full"
                         >
                             Dismiss
                         </button>
@@ -433,23 +461,26 @@ const RegistrationForm = () => {
                 </div>
             )}
 
-            {/* SUCCESS MODAL */}
+            {/* --- CUSTOM SUCCESS MODAL --- */}
             {success && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" onClick={closeModal}>
+                <div 
+                    className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4 transition-opacity duration-300" 
+                    onClick={closeModal} // Close on backdrop click
+                >
                     <div 
-                        className="bg-white rounded-2xl shadow-2xl p-8 text-center max-w-sm transform transition-all duration-300 scale-100"
+                        className="bg-white rounded-3xl shadow-2xl p-8 text-center max-w-xs sm:max-w-sm w-full transform transition-transform duration-300 scale-100"
                         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
                     >
-                        <h2 className="text-2xl font-bold text-green-600 mb-4">
+                        <h2 className="text-2xl font-extrabold text-green-600 mb-4">
                             🎉 Registered Successfully!
                         </h2>
-                        <p className="text-gray-600 mb-6">
-                            {/* FIXED: Unescaped apostrophe in "We'll" */}
+                        <p className="text-gray-700 mb-6">
+                            {/* JSX escaping for apostrophes */}
                             Thank you for joining our network. We&apos;ll get in touch soon!
                         </p>
                         <button
                             onClick={closeModal}
-                            className="bg-indigo-600 text-black px-6 py-2 rounded-lg shadow hover:bg-indigo-700 transition"
+                            className="bg-indigo-600 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:bg-indigo-700 transition duration-150 transform hover:shadow-xl w-full"
                         >
                             Close
                         </button>
