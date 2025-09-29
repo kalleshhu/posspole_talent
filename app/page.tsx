@@ -9,7 +9,7 @@ import Partners from './components/partners';
 // import Digital from './components/Digital/index';
 // import Beliefs from './components/Beliefs/index';
 import Wework from './components/Wework/index';
-import WhyPartner from './components/WhyPartner/index';
+import WhyPartner from './components/Whypartner/index';
 // import Ourteam from './components/Ourteam/index';
 // import Featured from './components/Featured/index';
 // import Manage from './components/Manage/index';
