@@ -73,7 +73,7 @@ export default class MultipleItems extends Component {
         <div className="mx-auto max-w-2xl lg:max-w-7xl sm:py-4 lg:px-8 mb-10 ">
           <div className="text-center">
             {/* <h3 className="text-4xl sm:text-6xl font-bold text-black my-2">We work in several verticals.</h3> */}
-            <h3 className="text-4xl sm:text-6xl font-bold text-black opacity-70 text-center my-2">
+            <h3 className="text-4xl sm:text-6xl font-bold text-black opacity-90 text-center my-2">
               We work in several verticals.
             </h3>
 
