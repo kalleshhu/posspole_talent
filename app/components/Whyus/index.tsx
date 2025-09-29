@@ -32,21 +32,21 @@ const data = [
   },
 ];
 
-const WhyUsCard = ({ item, index }) => {
+const WhyUsCard: React.FC<WhyUsCardProps> = ({ item, index }) => {
   const { ref, inView } = useInView({
-    triggerOnce: true, // animate only once
+    triggerOnce: true,
     threshold: 0.2,
   });
 
   return (
     <motion.div
       ref={ref}
-      initial={{ y: 80, opacity: 0 }}      // start slightly lower & transparent
-      animate={inView ? { y: 0, opacity: 20  } : {}}
+      initial={{ y: 80, opacity: 0 }}
+      animate={inView ? { y: 0, opacity: 1 } : {}}
       transition={{
-        duration: 0.2,                     // smooth duration
-        ease: "easeIn",                    // smooth slide-up easing
-        delay: index * 0.2,                // optional stagger
+        duration: 0.6,
+        ease: "easeOut",
+        delay: index * 0.2,
       }}
       className="flex items-start gap-5 relative group transition-all duration-500 p-4 rounded-xl"
     >
@@ -66,6 +66,8 @@ const WhyUsCard = ({ item, index }) => {
     </motion.div>
   );
 };
+
+
 
 const Whyus = () => {
   return (
