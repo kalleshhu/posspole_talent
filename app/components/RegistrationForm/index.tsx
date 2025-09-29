@@ -1,276 +1,108 @@
-"use client";
+import React, { useState } from 'react';
 
-import { useState } from "react";
+// Assuming you have a basic layout component or styles applied
+// Ensure you have necessary imports for any icons or other components used
 
-// This component provides a form for users to register for a talent network,
-// using formsubmit.co for backend submission and custom modals for feedback.
 const RegistrationForm = () => {
-    // State to manage the loading status during form submission
-    const [loading, setLoading] = useState(false);
-    // State to manage the visibility of the success modal
-    const [success, setSuccess] = useState(false);
-    // State to manage and display error messages (null if no error)
-    const [error, setError] = useState(null); 
+    const [status, setStatus] = useState({ message: '', error: false, success: false });
+    const [isLoading, setIsLoading] = useState(false);
 
     /**
-     * Handles the form submission asynchronously.
-     * Prevents default form action, sets loading state, sends data to formsubmit.co,
-     * and displays a success or error modal based on the response.
+     * Handles the form submission and sends data using the FormSubmit AJAX endpoint.
+     * @param e The form submission event, explicitly typed as React.FormEvent<HTMLFormElement>.
      */
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setLoading(true);
-        setError(null); // Clear previous errors
+        setStatus({ message: '', error: false, success: false });
+        setIsLoading(true);
 
         try {
+            // FIX: e.target is now correctly typed as HTMLFormElement
             const formData = new FormData(e.target);
+
             // The API endpoint for form submission (using formsubmit.co AJAX endpoint)
             const response = await fetch("https://formsubmit.co/ajax/letmein@posspole.com", {
                 method: "POST",
                 body: formData,
             });
 
-            if (response.ok) {
-                setSuccess(true);
-                e.target.reset(); // Clear form on successful submission
+            const data = await response.json();
+
+            if (data.success) {
+                setStatus({ message: 'Registration successful! We will be in touch soon.', error: false, success: true });
+                (e.target as HTMLFormElement).reset(); // Cast to HTMLFormElement to access reset()
             } else {
-                // Handle non-200 responses without using alert()
-                setError("❌ Something went wrong. The server returned an error.");
+                setStatus({ message: data.message || 'Submission failed. Please try again.', error: true, success: false });
             }
-        } catch (submitError) {
-            // Handle network errors without using alert()
-            console.error("Submission Error:", submitError);
-            setError("⚠️ Network Error. Check your connection and try again.");
+
+        } catch (error) {
+            console.error('Form submission error:', error);
+            setStatus({ message: 'An unexpected error occurred. Check your network.', error: true, success: false });
+        } finally {
+            setIsLoading(false);
         }
-
-        setLoading(false);
-    };
-
-    /**
-     * Closes the currently displayed success or error modal.
-     */
-    const closeModal = () => {
-        setSuccess(false);
-        setError(null);
     };
 
     return (
-        <div
-            id="registration-section"
-            // Layout adjusted with -mt-40 (typical Tailwind hero offset) and responsive padding
-            className="bg-gray-100 py-16 px-4 md:px-8 -mt-40"
-            style={{ marginBottom: "20%" }}
-        >
-            <h2 className="text-4xl sm:text-5xl font-extrabold text-center text-gray-900 mb-12">
-                Join Our Talent Network
-            </h2>
+        <div className="p-8 max-w-lg mx-auto bg-white rounded-xl shadow-lg">
+            <h2 className="text-2xl font-bold text-center text-indigo-700 mb-6">Register Now</h2>
+            
+            {/* Status Message Display */}
+            {status.message && (
+                <div 
+                    className={`p-3 mb-4 rounded-lg text-sm font-medium ${
+                        status.error 
+                            ? 'bg-red-100 text-red-700' 
+                            : 'bg-green-100 text-green-700'
+                    }`}
+                    role="alert"
+                >
+                    {status.message}
+                </div>
+            )}
 
-            <form
-                onSubmit={handleSubmit}
-                className="max-w-3xl mx-auto bg-white shadow-2xl rounded-3xl p-6 sm:p-10 space-y-6 sm:space-y-8"
-            >
-                <h3 className="text-3xl sm:text-4xl font-bold text-indigo-600 text-center">
-                    Register
-                </h3>
-                <p className="text-center text-gray-600 text-base sm:text-lg mb-3">
-                    {/* JSX escaping for apostrophes */}
-                    Fill in your details below and showcase your skills. We&apos;ll get in touch if there&apos;s a fit!
-                </p>
-
-                {/* NAME FIELD */}
+            <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                        Full Name
-                    </label>
-                    <input
-                        id="name"
-                        type="text"
-                        name="name"
-                        required
-                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition border border-transparent focus:border-indigo-500"
-                        placeholder="Enter your full name..."
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700">Full Name</label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        name="Name" 
+                        required 
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                     />
                 </div>
-
-                {/* EMAIL FIELD */}
                 <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                        Email Address
-                    </label>
-                    <input
-                        id="email"
-                        type="email"
-                        name="email"
-                        required
-                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition border border-transparent focus:border-indigo-500"
-                        placeholder="eg: abcd@example.com"
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="Email" 
+                        required 
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                     />
                 </div>
-
-                {/* PHONE FIELD */}
                 <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                        Phone Number
-                    </label>
-                    <input
-                        id="phone"
-                        type="tel"
-                        name="phone"
-                        required
-                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition border border-transparent focus:border-indigo-500"
-                        placeholder="your phone number..."
-                    />
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message (Optional)</label>
+                    <textarea 
+                        id="message" 
+                        name="Message" 
+                        rows={3}
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    ></textarea>
                 </div>
-
-                {/* AREA OF WORK DROPDOWN */}
-                <div>
-                    <label htmlFor="areaOfWork" className="block text-sm font-medium text-gray-700 mb-2">
-                        Area of Work
-                    </label>
-                    <select
-                        id="areaOfWork"
-                        name="areaOfWork"
-                        required
-                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white cursor-pointer focus:ring-2 focus:ring-indigo-500 transition border border-transparent focus:border-indigo-500"
-                    >
-                        <option value="">Select an option</option>
-                        <option>Web Development (Frontend, Backend, Full-stack)</option>
-                        <option>Mobile App Development (iOS, Android)</option>
-                        <option>Desktop Application Development</option>
-                        <option>Cloud Services (AWS, Azure, GCP)</option>
-                        <option>Data Science and Analytics</option>
-                        <option>AI/Machine Learning</option>
-                        <option>Cybersecurity</option>
-                        <option>Networking</option>
-                        <option>IT Infrastructure Management</option>
-                        <option>Testing and Quality Assurance (QA)</option>
-                        <option>DevOps and CI/CD</option>
-                        <option>Project Management</option>
-                    </select>
-                </div>
-
-                {/* EXPERIENCE DROPDOWN */}
-                <div>
-                    <label htmlFor="experience" className="block text-sm font-medium text-gray-700 mb-2">
-                        Experience
-                    </label>
-                    <select
-                        id="experience"
-                        name="experience"
-                        required
-                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white cursor-pointer focus:ring-2 focus:ring-indigo-500 transition border border-transparent focus:border-indigo-500"
-                    >
-                        <option value="">Select experience</option>
-                        <option>Fresher</option>
-                        <option>0-2 years</option>
-                        <option>3-5 years</option>
-                        <option>6-10 years</option>
-                        <option>10+ years</option>
-                    </select>
-                </div>
-
-                {/* DESCRIPTION TEXTAREA */}
-                <div>
-                    <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
-                        Brief Description
-                    </label>
-                    <textarea
-                        id="description"
-                        name="description"
-                        rows={4}
-                        required
-                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition border border-transparent focus:border-indigo-500"
-                        placeholder="Tell us a bit about yourself and your career goals."
-                    />
-                </div>
-
-                {/* RESUME LINK FIELD */}
-                <div>
-                    <label htmlFor="resumeLink" className="block text-sm font-medium text-gray-700 mb-2">
-                        Profile Link (Google Drive, OneDrive, Portfolio, etc.)
-                    </label>
-                    <input
-                        id="resumeLink"
-                        type="url"
-                        name="resumeLink"
-                        required
-                        placeholder="Paste your resume link here..."
-                        className="w-full p-4 rounded-xl shadow-md bg-[#f4f3f3] focus:bg-white focus:ring-2 focus:ring-indigo-500 transition border border-transparent focus:border-indigo-500"
-                    />
-                </div>
-
-                {/* Hidden field to disable formsubmit.co captcha */}
-                <input type="hidden" name="_captcha" value="false" />
-
-                {/* SUBMIT BUTTON */}
-                <div className="text-center">
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="text-white p-3 rounded-xl shadow-lg transition duration-200 transform hover:scale-[1.02] active:scale-[0.98] w-full sm:w-60 mt-4 sm:mt-10"
-                        style={{
-                            // Custom style to apply a gradient effect or fallback color
-                            background: loading ? "gray" : "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)", // Indigo to Violet gradient
-                            cursor: loading ? "not-allowed" : "pointer",
-                        }}
-                    >
-                        {loading ? "Submitting..." : "Submit"}
-                    </button>
-                </div>
+                
+                {/* Honeypot field for spam prevention using formsubmit.co feature */}
+                <input type="text" name="_honey" style={{ display: 'none' }} aria-hidden="true" />
+                
+                <button 
+                    type="submit" 
+                    disabled={isLoading}
+                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+                >
+                    {isLoading ? 'Processing...' : 'Submit Registration'}
+                </button>
             </form>
-
-            {/* --- CUSTOM ERROR MODAL --- */}
-            {error && (
-                <div 
-                    className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4 transition-opacity duration-300" 
-                    onClick={closeModal} // Close on backdrop click
-                >
-                    <div 
-                        className="bg-white rounded-3xl shadow-2xl p-8 text-center max-w-xs sm:max-w-sm w-full transform transition-transform duration-300 scale-100"
-                        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
-                    >
-                        <h2 className="text-2xl font-extrabold text-red-600 mb-4">
-                            🚫 Submission Failed
-                        </h2>
-                        <p className="text-gray-700 mb-6">
-                            {error}
-                        </p>
-                        <button
-                            onClick={closeModal}
-                            className="bg-red-600 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:bg-red-700 transition duration-150 transform hover:shadow-xl w-full"
-                        >
-                            Dismiss
-                        </button>
-                    </div>
-                </div>
-            )}
-
-            {/* --- CUSTOM SUCCESS MODAL --- */}
-            {success && (
-                <div 
-                    className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4 transition-opacity duration-300" 
-                    onClick={closeModal} // Close on backdrop click
-                >
-                    <div 
-                        className="bg-white rounded-3xl shadow-2xl p-8 text-center max-w-xs sm:max-w-sm w-full transform transition-transform duration-300 scale-100"
-                        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
-                    >
-                        <h2 className="text-2xl font-extrabold text-green-600 mb-4">
-                            🎉 Registered Successfully!
-                        </h2>
-                        <p className="text-gray-700 mb-6">
-                            {/* JSX escaping for apostrophes */}
-                            Thank you for joining our network. We&apos;ll get in touch soon!
-                        </p>
-                        <button
-                            onClick={closeModal}
-                            className="bg-indigo-600 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:bg-indigo-700 transition duration-150 transform hover:shadow-xl w-full"
-                        >
-                            Close
-                        </button>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };
