@@ -1,6 +1,7 @@
 "use client";
 import { Disclosure } from '@headlessui/react';
 import Link from 'next/link';
+import Image from 'next/image';
 import React, {useState, useEffect} from 'react';
 import { Bars3Icon } from '@heroicons/react/24/outline';
 import Drawer from "./Drawer";
@@ -53,7 +54,15 @@ const Navbar = () => {
                             {/* LOGO */}
                             <div className="flex flex-shrink-0 items-center border-right"> 
                                 <Link href="/" className='text-2xl sm:text-4xl font-semibold text-black'>
-                                    <img src="/images/navbar/logo2.jpg" alt='Posspole logo' style={{ width: "220px", height: "60px", marginTop:"2%"}} />
+                                    {/* Use Next.js Image for optimized logo rendering */}
+                                    <Image
+                                        src="/images/navbar/logo2.jpg"
+                                        alt="Posspole logo"
+                                        width={220}
+                                        height={60}
+                                        className="mt-[2%] w-[220px] h-[60px] object-contain"
+                                        priority
+                                    />
                                 </Link>
                             </div>
 

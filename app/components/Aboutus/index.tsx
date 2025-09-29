@@ -9,10 +9,11 @@ const Aboutus = () => {
 
                         {/* COLUMN-1 */}
                         <div className="relative w-[450px] h-[400px] mx-auto md:mx-0 rounded-[24px] shadow-[0_15px_40px_rgba(0,0,0,0.5)] overflow-hidden mt-14">
-                            <img
+                            <Image
                                 src="/images/aboutus/aboutus.jpg"
                                 alt="image"
-                                className="w-full h-full object-cover"
+                                fill
+                                className="object-cover"
                             />
                             {/* Black overlay */}
                             {/* <div className="absolute inset-0 bg-black/10"></div> */}

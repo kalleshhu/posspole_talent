@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import Link from "next/link";
+import Image from "next/image";
 
 
 interface DrawerProps {
@@ -31,9 +32,15 @@ const Drawer = ({ children, isOpen, setIsOpen }: DrawerProps) => {
                     <header className="px-4 py-4 flex items-center">
 
                         <div className="flex flex-shrink-0 items-center border-right">
-                           <Link href="/" className='text-2xl sm:text-4xl font-semibold text-black -ml-3'>
-                                                               <img src="/images/navbar/logo2.jpg" alt='Posspole logo' style={{ width: "200px", height: "60px", marginTop:"20px"}} />
-                                                           </Link>
+                        <Link href="/" className='text-2xl sm:text-4xl font-semibold text-black -ml-3'>
+                            <Image
+                                src="/images/navbar/logo2.jpg"
+                                alt="Posspole logo"
+                                width={200}
+                                height={60}
+                                style={{ marginTop: "20px" }}
+                            />
+                        </Link>
                         </div>
 
                         <XMarkIcon className="block h-6 w-6" onClick={() => {
