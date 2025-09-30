@@ -123,7 +123,7 @@ const RegistrationForm = () => {
             <option>DevOps and CI/CD</option>
             <option>Project Management</option>
             <option>Graphic Design</option>
-            <option>Human Resourses</option>
+            <option>Human Resources</option>
             <option>Software Architect</option>
             <option></option>
           </select>
