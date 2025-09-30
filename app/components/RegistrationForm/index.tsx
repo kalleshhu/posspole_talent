@@ -122,6 +122,10 @@ const RegistrationForm = () => {
             <option>Testing and Quality Assurance (QA)</option>
             <option>DevOps and CI/CD</option>
             <option>Project Management</option>
+            <option>Graphic Design</option>
+            <option>Human Resourses</option>
+            <option>Software Architect</option>
+            <option></option>
           </select>
         </div>
 
