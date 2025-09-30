@@ -32,7 +32,7 @@ export default class MultipleItems extends Component {
       slidesToScroll: 1,
       arrows: false,
       autoplay: true,
-      speed: 3000,
+      speed: 2000,
       autoplaySpeed: 0, // continuous
       cssEase: "linear", // smooth motion
       pauseOnHover: false,
